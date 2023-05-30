@@ -10,15 +10,15 @@
 
 ### PostgreSQL
 
-- `/etc/postgresql/postgresql.conf`
-- `/var/lib/postgresql/data`
-- `/var/log/postgresql`
+- Configuration: `/etc/postgresql/postgresql.conf`
+- Data: `/var/lib/postgresql/data`
+- Logs `/var/log/postgresql` (must be enabled)
 
 ### pgBackRest
 
-- `/etc/pgbackrest/pgbackrest.conf`
-- `/var/lib/pgbackrest`
-- `/var/log/pgbackrest`
+- Configuration: `/etc/pgbackrest/pgbackrest.conf`
+- Data: `/var/lib/pgbackrest`
+- Logs: `/var/log/pgbackrest`
 
 ## Usage
 
