@@ -47,6 +47,10 @@ RUN apt-get install -y \
 # plpython
 RUN apt-get install -y \
     postgresql-plpython3-15
+
+# locales
+RUN apt-get install -y \
+    locales-all
 RUN apt-get clean -y
 
 FROM install as setup
