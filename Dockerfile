@@ -60,7 +60,7 @@ RUN mkdir -p /var/lib/pgbackrest
 RUN chmod 750 /var/lib/pgbackrest
 RUN chown postgres:postgres /var/lib/pgbackrest
 
-# stanza and extension initialization
+# https://github.com/docker-library/docs/blob/master/postgres/README.md#initialization-scripts
 COPY pgbackrest-init.sh /docker-entrypoint-initdb.d/
 COPY pg_cron.sql /docker-entrypoint-initdb.d/
 COPY plpython3u.sql /docker-entrypoint-initdb.d/
