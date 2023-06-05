@@ -12,7 +12,7 @@
 
 - Configuration: `/etc/postgresql/postgresql.conf`
 - Data: `/var/lib/postgresql/data`
-- Logs: `/var/log/postgresql` (must be enabled)
+- Logs: `/var/log/postgresql` (must be enabled first)
 
 ### pgBackRest
 
