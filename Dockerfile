@@ -21,6 +21,16 @@ RUN wget -q -O - https://github.com/pgbackrest/pgbackrest/archive/release/2.45.t
 
 RUN cd /build/pgbackrest-release-2.45/src && ./configure && make
 
+FROM postgres:15-bullseye as patch
+
+# https://github.com/docker-library/postgres/issues/159
+RUN apt-get update
+RUN apt-get install -y \
+    patch
+
+COPY safe-initdb.docker-entrypoint.sh.diff .
+RUN patch /usr/local/bin/docker-entrypoint.sh < safe-initdb.docker-entrypoint.sh.diff
+
 FROM postgres:15-bullseye as install
 
 # https://pgbackrest.org/user-guide.html#installation
@@ -64,6 +74,8 @@ RUN chown postgres:postgres /var/lib/pgbackrest
 COPY pgbackrest-init.sh /docker-entrypoint-initdb.d/
 COPY pg_cron.sql /docker-entrypoint-initdb.d/
 COPY plpython3u.sql /docker-entrypoint-initdb.d/
+
+COPY --from=patch /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 FROM setup as run
 

@@ -1,0 +1,29 @@
+@@ -308,8 +308,19 @@ _main() {
+ 			exec gosu postgres "$BASH_SOURCE" "$@"
+ 		fi
+ 
++		local initFailed="$PGDATA/INITFAILED"
++
++		if [ -s "$initFailed" ]; then
++			cat >&2 <<-'EOE'
++				Error: Previous database initialization failed.
++			EOE
++			exit 1
++		fi
++
+ 		# only run initialization on an empty data directory
+ 		if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
++			trap "mkdir $initFailed" EXIT
++
+ 			docker_verify_minimum_env
+ 
+ 			# check dir permissions to reduce likelihood of half-initialized database
+@@ -329,6 +340,8 @@ _main() {
+ 			docker_temp_server_stop
+ 			unset PGPASSWORD
+ 
++			trap - EXIT
++
+ 			cat <<-'EOM'
+ 
+ 				PostgreSQL init process complete; ready for start up.
