@@ -79,4 +79,6 @@ COPY --from=patch /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entr
 
 FROM setup as run
 
+USER postgres
+
 CMD ["postgres", "--config_file=/etc/postgresql/postgresql.conf"]
