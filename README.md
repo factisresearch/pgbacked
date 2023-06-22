@@ -5,6 +5,40 @@
 - [pgBackRest](https://pgbackrest.org) — Backup & Restore
 - [plpython](https://www.postgresql.org/docs/current/plpython.html) — Run anything from within postgres
 - [pg_cron](https://github.com/citusdata/pg_cron) — Schedule sql jobs
+- [locales-all](https://packages.debian.org/sid/locales-all) — All locales precompiled
+
+## Table of Contents
+
+- [pgbacked](#pgbacked)
+  - [Table of Contents](#table-of-contents)
+  - [Changelog](#changelog)
+    - [`2.0.0`](#200)
+    - [`1.1.0`](#110)
+    - [`1.0.0`](#100)
+  - [Default paths](#default-paths)
+    - [PostgreSQL](#postgresql)
+    - [pgBackRest](#pgbackrest)
+  - [Usage](#usage)
+    - [Configuring pgBackRest](#configuring-pgbackrest)
+    - [Configuring PostgreSQL](#configuring-postgresql)
+    - [Calling pgBackRest using plpython](#calling-pgbackrest-using-plpython)
+    - [Scheduling a backup using pg\_cron](#scheduling-a-backup-using-pg_cron)
+    - [Restoring from backup](#restoring-from-backup)
+
+
+## Changelog
+
+### `2.0.0`
+
+- Run as user `postgres` ([#2](https://github.com/factisresearch/pgbacked/pull/2))
+
+### `1.1.0`
+
+- Make sure we don't start up with an incompletely initialized database ([#1](https://github.com/factisresearch/pgbacked/pull/1))
+
+### `1.0.0`
+
+Initial release
 
 ## Default paths
 
@@ -62,3 +96,16 @@ $$ LANGUAGE plpython3u;
 ```sql
 SELECT cron.schedule('0 0 * * *', 'SELECT pgbackrest.backup()');
 ```
+
+### Restoring from backup
+
+Example using [Docker Compose](https://docs.docker.com/compose/).
+
+```
+docker compose stop SERVICE_NAME
+docker compose run SERVICE_NAME find /var/lib/postgresql/data -mindepth 1 -delete
+docker compose run SERVICE_NAME pgbackrest restore --stanza=default
+docker compose start SERVICE_NAME
+```
+
+Refer to the [pgBackRest User Guide](https://pgbackrest.org/user-guide.html#quickstart/perform-restore).
