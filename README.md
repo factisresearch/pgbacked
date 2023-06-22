@@ -12,6 +12,7 @@
 - [pgbacked](#pgbacked)
   - [Table of Contents](#table-of-contents)
   - [Changelog](#changelog)
+    - [`2.0.1`](#201)
     - [`2.0.0`](#200)
     - [`1.1.0`](#110)
     - [`1.0.0`](#100)
@@ -27,6 +28,10 @@
 
 
 ## Changelog
+
+### `2.0.1`
+
+- Fix bash quotation ([#3](https://github.com/factisresearch/pgbacked/pull/3))
 
 ### `2.0.0`
 

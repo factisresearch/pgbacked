@@ -13,7 +13,7 @@
 +
  		# only run initialization on an empty data directory
  		if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
-+			trap "mkdir $initFailed" EXIT
++			trap "mkdir "$initFailed"" EXIT
 +
  			docker_verify_minimum_env
  
